@@ -453,7 +453,11 @@ module ActiveRecord
               swap_changed_attributes
               send('decrement_positions_on_lower_items') if lower_item
               swap_changed_attributes
-              send("add_to_list_#{add_new_at}")
+              unless add_new_at.empty?
+                send("add_to_list_#{add_new_at}")
+              else
+                self[position_column] = nil
+              end
             end
           end
 
